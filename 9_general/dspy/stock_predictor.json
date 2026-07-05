@@ -1,0 +1,47 @@
+{
+  "predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "symbol": "GOOGL",
+        "direction": "up"
+      },
+      {
+        "augmented": true,
+        "symbol": "MSFT",
+        "direction": "up"
+      },
+      {
+        "symbol": "TSLA",
+        "direction": "up"
+      },
+      {
+        "symbol": "AAPL",
+        "direction": "down"
+      }
+    ],
+    "signature": {
+      "instructions": "Given the fields `symbol`, produce the fields `direction`.",
+      "fields": [
+        {
+          "prefix": "Symbol:",
+          "description": "${symbol}"
+        },
+        {
+          "prefix": "Direction:",
+          "description": "Predict 'up' or 'down'"
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.0.4",
+      "cloudpickle": "3.1"
+    }
+  }
+}

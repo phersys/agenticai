@@ -1,0 +1,36 @@
+# Secrets / credentials
+.env
+service_account*.json
+credentials*.json
+client_secret*.json
+token.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Generated databases, checkpoints, and vector stores
+# (recreated by the scripts themselves on first run)
+*.db
+*.sqlite
+*.sqlite3
+**/*chroma*/
+**/*faiss*/
+2_openai_agents/data/
+
+# Large data files exceeding GitHub's size limit
+3_langgraph/amazon_products.csv
+
+# Logs
+*.log
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini

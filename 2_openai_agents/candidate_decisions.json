@@ -1,0 +1,231 @@
+[
+  {
+    "Candidate": {
+      "name": "Alice Johnson",
+      "skills": [
+        "Python",
+        "ML",
+        "Reinforcement Learning",
+        "Agentic AI"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Multi-agent systems",
+        "Autonomous Agents"
+      ],
+      "statement": "I have designed agentic AI systems for optimizing autonomous workflows."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "suitable",
+      "reason": "Alice has relevant skills in Agentic AI, 5 years of experience, and has worked on pertinent projects, aligning well with the role requirements."
+    },
+    "Decision": "invite for interview",
+    "Justification": "Candidate has strong alignment with role requirements through relevant skills, experience, and project work."
+  },
+  {
+    "Candidate": {
+      "name": "Bob Smith",
+      "skills": [
+        "Java",
+        "Spring",
+        "Cloud Architecture"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Web backend services"
+      ],
+      "statement": "I am interested in AI but mostly backend development experience."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "Not Suitable",
+      "reason": "Candidate has backend development skills but limited experience and interest in AI, which does not meet the requirements for an Agentic AI Developer/Architect role."
+    },
+    "Decision": "Reject",
+    "Justification": "Candidate lacks sufficient AI knowledge and experience, essential for the role of Agentic AI Developer/Architect."
+  },
+  {
+    "Candidate": {
+      "name": "Carol Lee",
+      "skills": [
+        "Python",
+        "NLP",
+        "Reinforcement Learning",
+        "Agentic AI"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "Chatbots",
+        "Multi-agent planning"
+      ],
+      "statement": "I have led multiple projects in agentic NLP applications."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "suitable",
+      "reason": "Candidate possesses required skills and has relevant experience in agentic AI projects."
+    },
+    "Decision": "invite for interview",
+    "Justification": "The candidate meets the qualifications with an appropriate skill set and experience in relevant projects."
+  },
+  {
+    "Candidate": {
+      "name": "David Kim",
+      "skills": [
+        "Python",
+        "ML",
+        "CV"
+      ],
+      "experience_years": 3,
+      "projects": [
+        "Computer Vision pipelines"
+      ],
+      "statement": "Interested in AI research, limited experience in agentic systems."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "Not Suitable",
+      "reason": "Limited experience in agentic systems and does not meet the specific role requirements for an Agentic AI Developer/Architect."
+    },
+    "Decision": "Reject",
+    "Justification": "Candidate lacks sufficient experience in agentic systems, which is critical for the role."
+  },
+  {
+    "Candidate": {
+      "name": "Eva Patel",
+      "skills": [
+        "Python",
+        "Agentic AI",
+        "RL",
+        "ML Ops"
+      ],
+      "experience_years": 7,
+      "projects": [
+        "Autonomous decision systems",
+        "RL frameworks"
+      ],
+      "statement": "I have architected agentic AI systems for large-scale deployment."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "suitable",
+      "reason": "Candidate has 7 years of experience, with 4 relevant skills and 2 relevant projects, leading to a high evaluation score."
+    },
+    "Decision": "invite for interview",
+    "Justification": "The candidate's extensive experience and relevant skills in agentic AI make her a strong fit for the role."
+  },
+  {
+    "Candidate": {
+      "name": "Frank Liu",
+      "skills": [
+        "Python",
+        "Deep Learning"
+      ],
+      "experience_years": 2,
+      "projects": [
+        "Image Classification"
+      ],
+      "statement": "Looking to move into agentic AI."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "not suitable",
+      "reason": "Candidate has skills and experience primarily in Python and Deep Learning, but lacks direct experience in agentic AI and does not demonstrate sufficient relevant projects or experience years for the role."
+    },
+    "Decision": "reject",
+    "Justification": "Candidate lacks direct experience and relevant projects specifically in agentic AI, which is critical for the role."
+  },
+  {
+    "Candidate": {
+      "name": "Grace Chen",
+      "skills": [
+        "Python",
+        "Agentic AI",
+        "RL",
+        "Multi-agent systems"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Distributed agentic platforms"
+      ],
+      "statement": "Strong background in agentic AI and multi-agent architectures."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "suitable",
+      "reason": "Candidate possesses relevant skills in Agentic AI and multi-agent systems, with sufficient experience and a strong project background."
+    },
+    "Decision": "invite for interview",
+    "Justification": "Candidate meets the required skills and experience for the role, demonstrating suitability through past projects and relevant expertise."
+  },
+  {
+    "Candidate": {
+      "name": "Henry Adams",
+      "skills": [
+        "JavaScript",
+        "React",
+        "UI/UX"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Frontend AI dashboards"
+      ],
+      "statement": "UI specialist, limited AI experience."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "Not Suitable",
+      "reason": "Lacks relevant AI skills and experience."
+    },
+    "Decision": "Reject",
+    "Justification": "The candidate lacks the necessary AI skills and experience required for the role."
+  },
+  {
+    "Candidate": {
+      "name": "Ivy Wang",
+      "skills": [
+        "Python",
+        "ML",
+        "Agentic AI",
+        "RL"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "Autonomous agent frameworks",
+        "Simulation environments"
+      ],
+      "statement": "Experience architecting agentic AI systems for research and industry."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "suitable",
+      "reason": "Ivy Wang possesses relevant skills in Python, ML, and Agentic AI with 6 years of experience. Her projects align well with the role requirements, demonstrating a strong background in designing autonomous agent frameworks."
+    },
+    "Decision": "invite for interview",
+    "Justification": "The candidate has the necessary skills and experience relevant to the role, making her a strong fit."
+  },
+  {
+    "Candidate": {
+      "name": "Jack Lee",
+      "skills": [
+        "Python",
+        "NLP",
+        "ML"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Chatbots",
+        "Language models"
+      ],
+      "statement": "Interested in agentic AI, limited practical experience."
+    },
+    "Role": "Agentic AI Developer/Architect",
+    "Suitability": {
+      "status": "not_suitable",
+      "reason": "Candidate has relevant skills and experience; however, the statement indicates limited practical experience in agentic AI, which is a primary requirement for the role."
+    },
+    "Decision": "reject",
+    "Justification": "The candidate lacks the required practical experience in agentic AI, which is essential for this role."
+  }
+]

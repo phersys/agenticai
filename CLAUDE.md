@@ -1,0 +1,43 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Repository overview
+
+This is a learning/reference repository for an "Agentic AI" course, not a single deployable application. Each top-level numbered directory is a standalone playground for one framework or topic, containing many small, independent scripts (mostly one script = one demo/concept). There is no shared build system, no test suite, and no linter configuration — treat each script as a self-contained example.
+
+## Setup & running scripts
+
+- Root `requirements.txt` covers dependencies for most numbered directories (OpenAI, LangGraph/LangChain, CrewAI, AutoGen, MCP, Bedrock, RAG/vector-store libs, explainability, etc.), pinned to specific versions verified to both resolve (`pip install --dry-run`) and actually import correctly in a real venv (`uv venv` + `uv pip install -r requirements.txt`). Install with `pip install -r requirements.txt` (or `uv pip install -r requirements.txt`) into a venv.
+- The LangChain/LangGraph/CrewAI packages are deliberately pinned to their pre-1.0 lines (langchain-core 0.3.x, langgraph 0.6.x, crewai 0.203.x) because the repo's scripts use 0.x-era APIs that break under the coordinated "1.0" releases those projects shipped. `chromadb` and `numpy` are held below their absolute latest for the same reason — see the inline comments in `requirements.txt`.
+- **`dspy` is intentionally excluded** from `requirements.txt`: `crewai` hard-pins `json-repair==0.25.2` while every `dspy` release requires `json-repair>=0.30.0`, so the two can never coexist in one environment. If you need to run `9_general/dspy/dspy_1.py` or `dspy_2.py`, create a separate venv and `pip install dspy` there.
+- **Known landmine: `crewai` breaks `shap` if imported first in the same process.** `crewai` monkey-patches `warnings.warn` to suppress pydantic deprecation noise, and that patch doesn't forward the `skip_file_prefixes` kwarg matplotlib uses internally — so `import shap` after `import crewai` raises `TypeError: filtered_warn() got an unexpected keyword argument 'skip_file_prefixes'`. Harmless as long as `4_crewai/` and `9_general/explainability/` scripts stay in separate processes (which they are today); if you ever combine crewai and shap in one script, import `shap` first.
+- phidata's import name is `phi`, not `phidata` (`import phi`, `from phi import ...`) — don't be misled by the package name when checking whether it's installed.
+- Some subprojects ship their own isolated `venv/` (e.g. `12_project/12_1_openai_agents_diet_agent/venv`) — check for a local venv before assuming the root install applies.
+- Root `.env` holds placeholder keys for every provider/tool used anywhere in the repo (OpenAI, Anthropic, Google, Groq, Cohere, Pinecone, Qdrant, Tavily, Exa, SerpAPI, MailerSend, ntfy, etc.). Nearly every script calls `load_dotenv(override=True)` near the top, expecting `.env` in the repo root (Google ADK agent folders instead keep their own local `.env`).
+- There is no single entrypoint. Scripts are run individually, e.g. `python 3_langgraph/3_1_langgraph_basic.py`.
+
+## Known gotcha: hardcoded absolute paths
+
+Many scripts (MCP server paths passed to subprocesses, Chroma persistent-client directories, image/data file paths, etc.) hardcode absolute Windows paths under the repo's *old* folder name, `C:\code\agenticai\...` (missing the `-claude` suffix this repo now has). This affects ~50 files spread across `1_openai_chat_requests`, `2_openai_agents`, `3_langgraph`, `4_crewai`, `6_mcp`, `8_bedrock`, `9_general`, and `12_project` — including the Flask demos, which intentionally kept this stale path style to match the sibling files they were ported from. If a script fails with a file-not-found error, check for one of these stale paths first and update it to the current repo root (or better, make it relative via `os.path`).
+
+## Directory map
+
+- `0_basic_demo` — ad hoc LangGraph + MCP (Google Sheets) demo.
+- `1_openai_chat_requests` — raw OpenAI Chat Completions and Responses API examples, plus Gemini/Ollama equivalents (streaming, images, PDFs, structured output via Pydantic, a basic chatbot).
+- `2_openai_agents` — OpenAI Agents SDK: classic agent patterns (tool use, plan-and-execute, ReAct, reflection, ReWOO, multi-agent), RAG variants (hardcoded/semantic/OpenAI vector store/FAQ db), guardrails, sync/async agents, agent-as-tool, short-term memory, and Flask front ends for an insurance/FAQ demo.
+- `3_langgraph` — LangGraph: LCEL basics, memory strategies (ephemeral, `MemorySaver`, SQLite checkpointer), a code-review agent, guardrails, and a banking chatbot built up across ChromaDB/FAISS/SERP/email-notification variants with Flask front ends.
+- `4_crewai` — CrewAI: multi-agent crews for document generation, log analysis, cloud billing, stock analysis, and customer service (the latter two with Flask front ends), including with/without-memory comparisons.
+- `5_autogen` — AutoGen: basic/sync/async agents, group chats (round robin, selector, magentic), GraphFlow (including parallel join), structured output, multimodal messages, memory.
+- `6_mcp` — Model Context Protocol: paired `*_server.py` / `*_client.py` scripts per tool (weather, crypto, forex, Airbnb, Indian jobs, a SQLite database, GitHub, Smithery-hosted servers). `6_10_malicious_mcp_*` is a deliberate prompt-injection/attack demo for security awareness, not a template to copy.
+- `7_n8n` — n8n workflow exports (JSON, not runnable Python) plus a small Flask bridge (`app.py`) that forwards file uploads to an n8n webhook, and Qdrant collection setup/population scripts.
+- `8_bedrock` — AWS Bedrock: raw boto3 calls, LangChain integration/RAG, image generation (Stability, Titan), text/image embeddings.
+- `9_general` — grab-bag of standalone topics: DSPy, SHAP/LIME explainability, LangChain basics, Langfuse observability (local and hosted), Phidata, and RAG across Chroma/LlamaIndex/Cohere.
+- `11_google_adk` — Google Agent Development Kit. Each subfolder is a self-contained ADK agent package: `agent.py` exports `root_agent`, `__init__.py` does `from . import agent`, and each folder has its own `.env` — the ADK CLI discovers agents by folder, so this layout is required, not incidental.
+- `12_project` — capstone project: an OpenAI Agents SDK "diet agent" built up incrementally across numbered files (basic agent → streaming → tool calling → RAG → multi-agent → MCP integration); has its own `venv`.
+
+## Conventions
+
+- Files within a directory are numbered to reflect teaching order (e.g. `2_1_...` before `2_2_...`); later files build on concepts introduced in earlier ones within the same directory.
+- `__pycache__/`, local `venv/` folders, and `.db`/`.sqlite` files are already present in several demo directories from prior runs — they're script output/artifacts, not something to scaffold.
+- Since there's no test suite or CI, verify a change by running the specific script directly and inspecting console output (or the Flask UI it launches, where applicable). UI demos use Flask exclusively (single-file apps with an inline `render_template_string` form) — Gradio has been removed from the repo entirely; don't reintroduce it.
