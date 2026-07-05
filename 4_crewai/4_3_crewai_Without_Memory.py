@@ -1,4 +1,9 @@
 # Code Reviewer using CrewAI
+# Important:
+# This crew does NOT use memory=True.
+# It also does NOT pass task context between tasks.
+# So each reviewer works independently.
+
 import requests
 from dotenv import load_dotenv
 from crewai import Agent, Task, Crew

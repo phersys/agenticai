@@ -17,11 +17,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "suitable",
-      "reason": "Alice has relevant skills in Agentic AI, 5 years of experience, and has worked on pertinent projects, aligning well with the role requirements."
+      "status": "strong",
+      "reason": "Candidate has relevant experience in Agentic AI, multi-agent systems, and a solid command of Python, all of which align well with the role requirements."
     },
-    "Decision": "invite for interview",
-    "Justification": "Candidate has strong alignment with role requirements through relevant skills, experience, and project work."
+    "Decision": "invite_for_interview",
+    "Justification": "Candidate's strong suitability is supported by significant experience and relevant skills directly related to the role."
   },
   {
     "Candidate": {
@@ -39,11 +39,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "Not Suitable",
-      "reason": "Candidate has backend development skills but limited experience and interest in AI, which does not meet the requirements for an Agentic AI Developer/Architect role."
+      "status": "weak",
+      "reason": "Lacks direct experience in Agentic AI, LLM application development, and relevant project evidence."
     },
-    "Decision": "Reject",
-    "Justification": "Candidate lacks sufficient AI knowledge and experience, essential for the role of Agentic AI Developer/Architect."
+    "Decision": "reject",
+    "Justification": "The candidate has weak suitability due to a lack of direct experience in areas critical for the role, including Agentic AI and relevant projects."
   },
   {
     "Candidate": {
@@ -63,11 +63,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "suitable",
-      "reason": "Candidate possesses required skills and has relevant experience in agentic AI projects."
+      "status": "strong",
+      "reason": "Candidate has relevant experience in Agentic AI and multi-agent planning, strong Python skills, and has led projects in agentic NLP applications."
     },
-    "Decision": "invite for interview",
-    "Justification": "The candidate meets the qualifications with an appropriate skill set and experience in relevant projects."
+    "Decision": "invite_for_interview",
+    "Justification": "Candidate's strong suitability status and relevant experience in the field warrant an interview."
   },
   {
     "Candidate": {
@@ -85,11 +85,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "Not Suitable",
-      "reason": "Limited experience in agentic systems and does not meet the specific role requirements for an Agentic AI Developer/Architect."
+      "status": "weak",
+      "reason": "Limited experience in agentic systems and lack of relevant project evidence for Agentic AI and LLM application development."
     },
-    "Decision": "Reject",
-    "Justification": "Candidate lacks sufficient experience in agentic systems, which is critical for the role."
+    "Decision": "reject",
+    "Justification": "The candidate has weak suitability due to limited experience in agentic systems and is not a fit for the role."
   },
   {
     "Candidate": {
@@ -109,11 +109,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "suitable",
-      "reason": "Candidate has 7 years of experience, with 4 relevant skills and 2 relevant projects, leading to a high evaluation score."
+      "status": "strong",
+      "reason": "Candidate possesses extensive experience in Agentic AI and relevant project work that aligns with the role requirements."
     },
-    "Decision": "invite for interview",
-    "Justification": "The candidate's extensive experience and relevant skills in agentic AI make her a strong fit for the role."
+    "Decision": "invite_for_interview",
+    "Justification": "The candidate has strong qualifications and extensive relevant experience for the role."
   },
   {
     "Candidate": {
@@ -130,11 +130,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "not suitable",
-      "reason": "Candidate has skills and experience primarily in Python and Deep Learning, but lacks direct experience in agentic AI and does not demonstrate sufficient relevant projects or experience years for the role."
+      "status": "weak",
+      "reason": "Limited experience in agentic AI and LLM application development, with only 2 years of overall experience and no relevant projects."
     },
     "Decision": "reject",
-    "Justification": "Candidate lacks direct experience and relevant projects specifically in agentic AI, which is critical for the role."
+    "Justification": "The candidate has weak suitability due to lack of specific experience in agentic AI and related projects."
   },
   {
     "Candidate": {
@@ -153,11 +153,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "suitable",
-      "reason": "Candidate possesses relevant skills in Agentic AI and multi-agent systems, with sufficient experience and a strong project background."
+      "status": "strong",
+      "reason": "Candidate has relevant experience in agentic AI, multi-agent systems, and architecture, along with a solid Python skill set."
     },
-    "Decision": "invite for interview",
-    "Justification": "Candidate meets the required skills and experience for the role, demonstrating suitability through past projects and relevant expertise."
+    "Decision": "invite_for_interview",
+    "Justification": "Candidate is highly suitable with strong experience and skills directly related to the role."
   },
   {
     "Candidate": {
@@ -175,11 +175,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "Not Suitable",
-      "reason": "Lacks relevant AI skills and experience."
+      "status": "weak",
+      "reason": "Candidate lacks relevant Agentic AI experience and skills directly related to AI development and architecture."
     },
-    "Decision": "Reject",
-    "Justification": "The candidate lacks the necessary AI skills and experience required for the role."
+    "Decision": "reject",
+    "Justification": "Candidate's weak suitability is due to significant gaps in AI-related experience and skills, which are critical for the role."
   },
   {
     "Candidate": {
@@ -199,11 +199,11 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "suitable",
-      "reason": "Ivy Wang possesses relevant skills in Python, ML, and Agentic AI with 6 years of experience. Her projects align well with the role requirements, demonstrating a strong background in designing autonomous agent frameworks."
+      "status": "strong",
+      "reason": "Candidate has relevant experience in Agentic AI and a strong background in Python and architecture."
     },
-    "Decision": "invite for interview",
-    "Justification": "The candidate has the necessary skills and experience relevant to the role, making her a strong fit."
+    "Decision": "invite_for_interview",
+    "Justification": "Candidate's strong experience and relevant skills align well with the role requirements."
   },
   {
     "Candidate": {
@@ -222,10 +222,10 @@
     },
     "Role": "Agentic AI Developer/Architect",
     "Suitability": {
-      "status": "not_suitable",
-      "reason": "Candidate has relevant skills and experience; however, the statement indicates limited practical experience in agentic AI, which is a primary requirement for the role."
+      "status": "moderate",
+      "reason": "Candidate has relevant skills and experience in Python and NLP but lacks practical experience specifically in agentic AI and multi-agent systems."
     },
     "Decision": "reject",
-    "Justification": "The candidate lacks the required practical experience in agentic AI, which is essential for this role."
+    "Justification": "While the candidate has strong programming skills and relevant experience, the risks associated with their limited practical experience in agentic AI and lack of related architecture/design experience outweigh the strengths."
   }
 ]

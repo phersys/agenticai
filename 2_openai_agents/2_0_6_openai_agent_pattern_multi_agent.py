@@ -1,9 +1,9 @@
 import asyncio
 import json
 import re
+from pathlib import Path
 from dotenv import load_dotenv
 from agents import Agent, Runner
-from pathlib import Path
 
 load_dotenv(override=True)
 
@@ -13,35 +13,39 @@ load_dotenv(override=True)
 def extract_json(text: str) -> str:
     """
     Extract the first {...} block from text.
-    This handles cases where the agent adds extra commentary.
+    Useful when the model accidentally adds extra text.
     """
     match = re.search(r"\{.*\}", text, re.DOTALL)
     if match:
         return match.group(0)
-    return text  # fallback
+    return text
 
 def safe_parse_json(text: str) -> dict:
     """
-    Extract and parse JSON safely, with fallback to raw text.
+    Parse JSON safely, with fallback to raw text.
     """
     try:
         clean_text = extract_json(text)
         return json.loads(clean_text)
     except json.JSONDecodeError:
-        return {"error": "Invalid JSON", "raw_output": text}
+        return {
+            "error": "Invalid JSON",
+            "raw_output": text
+        }
 
 # --------------------------------
-# AGENT 1: PLANNER
+# AGENT 1: EXTRACTOR
 # --------------------------------
-planner_agent = Agent(
-    name="HRPlannerAgent",
+extractor_agent = Agent(
+    name="CandidateExtractorAgent",
     model="gpt-4o-mini",
     instructions="""
-You are a Planner Agent for HR candidate filtering.
+You are a Candidate Extractor Agent for HR screening.
 
 Task:
-- Extract candidate details: skills, experience, projects, statement
-- Summarize candidate suitability for the role 'Agentic AI Developer/Architect'
+- Extract and structure candidate details
+- Preserve factual information from the input
+- Do not make a hiring decision
 
 VERY IMPORTANT:
 - Output MUST be valid JSON only.
@@ -53,12 +57,11 @@ JSON FORMAT:
   "Candidate": {
     "name": "...",
     "skills": [...],
-    "experience_years": ...,
+    "experience_years": 0,
     "projects": [...],
     "statement": "..."
   },
-  "Role": "Agentic AI Developer/Architect",
-  "EvaluationFormula": "..."
+  "Role": "Agentic AI Developer/Architect"
 }
 """
 )
@@ -67,18 +70,26 @@ JSON FORMAT:
 # AGENT 2: EVALUATOR
 # --------------------------------
 evaluator_agent = Agent(
-    name="HREvaluatorAgent",
+    name="CandidateEvaluatorAgent",
     model="gpt-4o-mini",
     instructions="""
-You are an Evaluation Agent for HR.
+You are a Candidate Evaluator Agent for HR screening.
 
 Input:
-- Planner Agent JSON output
+- Candidate Extractor Agent JSON output
 
 Task:
-- Compare candidate skills, experience, and projects to role requirements
-- Consider statement quality for agentic AI experience
-- Output MUST indicate whether candidate is suitable
+- Compare candidate skills, experience, projects, and statement to the role
+- Assess suitability for Agentic AI Developer/Architect
+- Do not make the final interview/reject decision
+
+Evaluation criteria:
+- Agentic AI experience
+- LLM application development
+- Python experience
+- Multi-agent or workflow orchestration experience
+- Architecture/design ability
+- Relevant project evidence
 
 VERY IMPORTANT:
 - Output MUST be valid JSON only.
@@ -86,7 +97,12 @@ VERY IMPORTANT:
 
 JSON FORMAT:
 {
-  "Suitability": {"status": "...", "reason": "..."}
+  "Suitability": {
+    "status": "strong" | "moderate" | "weak",
+    "reason": "..."
+  },
+  "Strengths": [...],
+  "Risks": [...]
 }
 """
 )
@@ -95,18 +111,23 @@ JSON FORMAT:
 # AGENT 3: DECIDER
 # --------------------------------
 decider_agent = Agent(
-    name="HRDeciderAgent",
+    name="CandidateDecisionAgent",
     model="gpt-4o-mini",
     instructions="""
-You are a Decision Agent for HR candidate selection.
+You are a Candidate Decision Agent for HR screening.
 
 Input:
-- Planner JSON output
-- Evaluator JSON output
+- Extractor Agent JSON output
+- Evaluator Agent JSON output
 
 Task:
 - Decide whether to invite candidate for interview or reject
 - Provide final justification
+
+Decision rules:
+- If suitability is "strong", invite for interview.
+- If suitability is "moderate", invite only if strengths outweigh risks.
+- If suitability is "weak", reject.
 
 VERY IMPORTANT:
 - Output MUST be valid JSON only.
@@ -117,7 +138,7 @@ JSON FORMAT:
   "Candidate": {...},
   "Role": "Agentic AI Developer/Architect",
   "Suitability": {...},
-  "Decision": "...",
+  "Decision": "invite_for_interview" | "reject",
   "Justification": "..."
 }
 """
@@ -127,7 +148,7 @@ JSON FORMAT:
 # PROCESS SINGLE CANDIDATE
 # --------------------------------
 async def process_candidate(candidate: dict) -> dict:
-    planner_input = f"""
+    extractor_input = f"""
 Candidate Details:
 - Name: {candidate['name']}
 - Skills: {', '.join(candidate['skills'])}
@@ -137,19 +158,27 @@ Candidate Details:
 
 Role: Agentic AI Developer/Architect
 """
-    # Step 1: Planning
-    plan_result = await Runner.run(planner_agent, planner_input)
-    plan_json = safe_parse_json(plan_result.final_output)
 
-    # Step 2: Evaluation
-    eval_result = await Runner.run(evaluator_agent, json.dumps(plan_json))
-    eval_json = safe_parse_json(eval_result.final_output)
+    # Step 1: Extract candidate profile
+    extractor_result = await Runner.run(extractor_agent, extractor_input)
+    extractor_json = safe_parse_json(extractor_result.final_output)
 
-    # Step 3: Decision
-    decider_input = json.dumps({
-        "PlannerOutput": plan_json,
-        "EvaluatorOutput": eval_json
-    })
+    # Step 2: Evaluate candidate
+    evaluator_result = await Runner.run(
+        evaluator_agent,
+        json.dumps(extractor_json, indent=2)
+    )
+    evaluator_json = safe_parse_json(evaluator_result.final_output)
+
+    # Step 3: Make final decision
+    decider_input = json.dumps(
+        {
+            "ExtractorOutput": extractor_json,
+            "EvaluatorOutput": evaluator_json
+        },
+        indent=2
+    )
+
     decision_result = await Runner.run(decider_agent, decider_input)
     decision_json = safe_parse_json(decision_result.final_output)
 
@@ -159,12 +188,12 @@ Role: Agentic AI Developer/Architect
 # MAIN LOOP
 # --------------------------------
 async def main():
-    # Load candidates from JSON file
-    with open(r"c:\code\agenticai\2_openai_agents\candidates.json", "r", encoding="utf-8") as f:
+    input_file = Path(r"c:\code\agenticai\2_openai_agents\candidates.json")
+    output_file = Path(r"c:\code\agenticai\2_openai_agents\candidate_decisions.json")
+
+    with input_file.open("r", encoding="utf-8") as f:
         candidates = json.load(f)
 
-    # Output file (full JSON array)
-    output_file = Path(r"c:\code\agenticai\2_openai_agents\candidate_decisions.json")
     all_decisions = []
 
     for candidate in candidates:
@@ -172,7 +201,6 @@ async def main():
         all_decisions.append(decision_json)
         print(f"Processed candidate: {candidate['name']}")
 
-    # Write all decisions to a single JSON array
     with output_file.open("w", encoding="utf-8") as f:
         json.dump(all_decisions, f, indent=2)
 

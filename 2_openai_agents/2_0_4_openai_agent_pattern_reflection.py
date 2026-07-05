@@ -1,98 +1,89 @@
+# pip install openai-agents python-dotenv
+
 import asyncio
+import json
 from dotenv import load_dotenv
 from agents import Agent, Runner
-import json
 
 load_dotenv(override=True)
 
 # -------------------------------------------------
-# REFLECTION AGENT (JSON OUTPUT)
+# REFLECTION AGENT
 # -------------------------------------------------
 reflection_agent = Agent(
-    name="ReflectionAgentJSON",
+    name="CustomerMessageReflectionAgent",
     model="gpt-4o-mini",
     instructions="""
-You are a reflection-based agent.
+You improve customer-facing incident communication.
 
-Follow this exact format STRICTLY.
-
-Produce output as valid JSON with three keys:
+Return ONLY valid JSON with exactly these keys:
 
 {
-  "Draft": "...",
-  "Reflection": "...",
-  "RevisedAnswer": "..."
+  "draft": "...",
+  "reflection": "...",
+  "revised_answer": "..."
 }
 
-Draft:
-- Produce an initial answer to the user query.
+draft:
+Write an initial customer-facing message.
 
-Reflection:
-- Critically evaluate the Draft.
-- Identify missing details, inaccuracies, or improvements.
+reflection:
+Critique the draft. Check whether it is:
+- clear for non-technical users
+- accountable without blaming individuals
+- honest about impact
+- specific about next steps
+- specific about prevention
 
-RevisedAnswer:
-- Improve the Draft using the Reflection.
-- This is the final answer shown to the user.
-
-Do NOT skip any section.
-Ensure the output is valid JSON, parsable by a program.
+revised_answer:
+Rewrite the message using the reflection.
+This should be the final customer-ready version.
 """
 )
 
-# -------------------------------------------------
-# RUNNER LOOP
-# -------------------------------------------------
+
+async def run_reflection(user_request: str):
+    result = await Runner.run(reflection_agent, user_request)
+
+    try:
+        data = json.loads(result.final_output)
+    except json.JSONDecodeError:
+        print("Could not parse JSON.")
+        print(result.final_output)
+        return
+
+    print("\n===== DRAFT =====\n")
+    print(data["draft"])
+
+    print("\n===== REFLECTION =====\n")
+    print(data["reflection"])
+
+    print("\n===== FINAL REVISED ANSWER =====\n")
+    print(data["revised_answer"])
+
+
 async def main():
-    # Query 1
-    result1 = await Runner.run(
-        reflection_agent,
-        """
-        Draft a customer-facing explanation for an outage where
-        background jobs were delayed for 2 hours due to a database
-        connection pool misconfiguration.
+    request = """
+Write a customer-facing outage update.
 
-        Audience:
-        - Non-technical customers
-        - Paying enterprise users
+Incident:
+- Background jobs were delayed for 2 hours
+- Some reports and exports were not generated on time
+- No customer data was lost
+- Root cause was a database connection pool misconfiguration
+- The issue is now resolved
 
-        Constraints:
-        - Do not blame individuals
-        - Avoid internal jargon
-        - Must include next steps and prevention measures
-        """
-    )
+Audience:
+- Non-technical enterprise customers
 
-    print("\n===== RAW OUTPUT =====\n")
-    print(result1.final_output)
+Constraints:
+- Do not blame individuals
+- Avoid internal jargon
+- Include what happened, impact, current status, next steps, and prevention
+"""
 
-    # Parse JSON safely
-    try:
-        data1 = json.loads(result1.final_output)
-        print("\n===== PARSED REFLECTION =====\n")
-        print("Draft:\n", data1.get("Draft", "N/A"))
-        print("\nReflection:\n", data1.get("Reflection", "N/A"))
-        print("\nRevised Answer:\n", data1.get("RevisedAnswer", "N/A"))
-    except json.JSONDecodeError:
-        print("\nERROR: Could not parse JSON output. Check agent formatting.")
+    await run_reflection(request)
 
-    # Query 2 (product-grade, different example)
-    result2 = await Runner.run(
-        reflection_agent,
-        "Explain how an AI agent should handle ambiguous user requests in a production system."
-    )
-    print("\n===== RAW OUTPUT =====\n")
-    print(result2.final_output)
-
-    # Parse JSON safely
-    try:
-        data2 = json.loads(result2.final_output)
-        print("\n===== PARSED REFLECTION =====\n")
-        print("Draft:\n", data2.get("Draft", "N/A"))
-        print("\nReflection:\n", data2.get("Reflection", "N/A"))
-        print("\nRevised Answer:\n", data2.get("RevisedAnswer", "N/A"))
-    except json.JSONDecodeError:
-        print("\nERROR: Could not parse JSON output. Check agent formatting.")
 
 if __name__ == "__main__":
     asyncio.run(main())
