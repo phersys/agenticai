@@ -127,7 +127,7 @@ else: # If collection doesn't exist, create it
         collection_name=COLLECTION_NAME,
         persist_directory=PERSIST_DIR
     )
-    vectordb.persist()
+    # vectordb.persist()
 
 class ChatState(TypedDict):
     question: str

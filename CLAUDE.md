@@ -23,7 +23,8 @@ Many scripts (MCP server paths passed to subprocesses, Chroma persistent-client 
 
 ## Directory map
 
-- `0_basic_demo` — ad hoc LangGraph + MCP (Google Sheets) demo.
+- `0_slides` — course slide deck (`Agentic AI.pptx`); not code.
+- `demo` — a single standalone OpenAI Agents SDK warm-up script (`our_first_agent.py`), separate from the numbered course directories.
 - `1_openai_chat_requests` — raw OpenAI Chat Completions and Responses API examples, plus Gemini/Ollama equivalents (streaming, images, PDFs, structured output via Pydantic, a basic chatbot).
 - `2_openai_agents` — OpenAI Agents SDK: classic agent patterns (tool use, plan-and-execute, ReAct, reflection, ReWOO, multi-agent), RAG variants (hardcoded/semantic/OpenAI vector store/FAQ db), guardrails, sync/async agents, agent-as-tool, short-term memory, and Flask front ends for an insurance/FAQ demo.
 - `3_langgraph` — LangGraph: LCEL basics, memory strategies (ephemeral, `MemorySaver`, SQLite checkpointer), a code-review agent, guardrails, and a banking chatbot built up across ChromaDB/FAISS/SERP/email-notification variants with Flask front ends.
@@ -35,6 +36,7 @@ Many scripts (MCP server paths passed to subprocesses, Chroma persistent-client 
 - `9_general` — grab-bag of standalone topics: DSPy, SHAP/LIME explainability, LangChain basics, Langfuse observability (local and hosted), Phidata, and RAG across Chroma/LlamaIndex/Cohere.
 - `11_google_adk` — Google Agent Development Kit. Each subfolder is a self-contained ADK agent package: `agent.py` exports `root_agent`, `__init__.py` does `from . import agent`, and each folder has its own `.env` — the ADK CLI discovers agents by folder, so this layout is required, not incidental.
 - `12_project` — capstone project: an OpenAI Agents SDK "diet agent" built up incrementally across numbered files (basic agent → streaming → tool calling → RAG → multi-agent → MCP integration); has its own `venv`.
+- `13_a2a` — Agent2Agent (A2A) protocol examples, hand-rolled (no `a2a-sdk`) to show the protocol shape. Top-level `server.py`/`client.py` is a minimal, dependency-free (stdlib `http.server` + `urllib.request` only) single agent/single client echo. `multi_agent_trip_planner/` is the more realistic one: three separate agent processes (`weather_agent.py`, `currency_agent.py`, `orchestrator_agent.py`) plus `client.py`, sharing a small `a2a_lib.py` JSON-RPC helper module. The orchestrator discovers the two specialist agents' Agent Cards at startup, uses OpenAI (`responses.parse` + Pydantic, same pattern as `1_openai_chat_requests/1_7_openai_responses_pydantic.py`) to route a free-text request between them, delegates real `SendMessage` sub-tasks with a shared `contextId`, and degrades gracefully if a specialist is down or rejects the request.
 
 ## Conventions
 

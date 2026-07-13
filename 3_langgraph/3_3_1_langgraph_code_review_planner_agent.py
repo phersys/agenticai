@@ -22,7 +22,7 @@ class AgentState(TypedDict):
 # Setup
 # --------------------------
 load_dotenv(override=True)
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
 
 # --------------------------
 # Helper: Fetch code
@@ -51,7 +51,7 @@ def fetch_code(repo_url: str, path: str = "") -> str:
 # --------------------------
 
 def planner_agent(state: AgentState) -> AgentState:
-    """Decides which step to execute next based on what’s already done."""
+    """Decides which step to execute next based on what's already done."""
     print("Planner: Deciding next action...")
 
     context = f"""

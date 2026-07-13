@@ -56,7 +56,7 @@ doc_crew = Crew(
 # 4. Run the crew
 if __name__ == "__main__":
     # Change this to any technology you want to document
-    technology = "Kuberenetes"
+    technology = "Vector DB and RAG"
     
     print(f"Starting documentation generation for: {technology}")
     print("=" * 50)

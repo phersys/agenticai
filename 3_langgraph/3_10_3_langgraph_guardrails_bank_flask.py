@@ -3,13 +3,20 @@
 from flask import Flask, request, render_template_string
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_anthropic import ChatAnthropic
+#from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
 import os
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 load_dotenv()
 
 app = Flask(__name__)
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    temperature=0
+)
+
 
 # ------------------------------------------------------------
 # Embeddings
@@ -39,14 +46,6 @@ banking_db = Chroma(
     embedding_function=embeddings
 )
 
-# ------------------------------------------------------------
-# LLM (ONLY for explanation)
-# ------------------------------------------------------------
-llm = ChatAnthropic(
-    model="claude-sonnet-4-5",
-    anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"),
-    temperature=0.2
-)
 
 # ------------------------------------------------------------
 # Guardrail check (distance-based)
@@ -144,9 +143,12 @@ def banking_answer(query: str, threshold: float = 0.4):
 # ------------------------------------------------------------
 def chat_fn(message):
     blocked, matched_text, category, similarity, _ = guardrail_check(message)
+    
+    print ("***Guardrail Debug***", blocked)
 
     if blocked:
         explanation = explain_violation(message, matched_text, category)
+        print("***Guardrail Explanation from the LLM ***", explanation)
         return (
             "Query blocked by safety guardrails\n\n"
             f"Category: {category}\n"
@@ -242,4 +244,4 @@ def home():
 # Main
 # ------------------------------------------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

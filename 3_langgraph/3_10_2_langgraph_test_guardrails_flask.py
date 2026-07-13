@@ -3,7 +3,7 @@
 from flask import Flask, request, render_template_string
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_anthropic import ChatAnthropic
+#from langchain_anthropic import ChatAnthropic
 import os
 from dotenv import load_dotenv
 
@@ -145,4 +145,4 @@ def home():
 # Main
 # ------------------------------------------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

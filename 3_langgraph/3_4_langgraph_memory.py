@@ -142,7 +142,7 @@ def run_with_memory_saver():
 def run_with_sqlite_saver():
     print("\n=== 3. WITH SQLITESAVER ===")
 
-    conn = sqlite3.connect("notes_memory.db", check_same_thread=False)
+    conn = sqlite3.connect(r"c:\code\agenticai\3_langgraph\notes_memory.db", check_same_thread=False)
     app = build_graph(checkpointer=SqliteSaver(conn))
 
     config = {
@@ -183,7 +183,7 @@ def run_with_sqlite_saver():
 def read_sqlite_memory():
     print("\n=== 4. READ SAVED SQLITE MEMORY ===")
 
-    conn = sqlite3.connect("notes_memory.db", check_same_thread=False)
+    conn = sqlite3.connect(r"c:\code\agenticai\3_langgraph\notes_memory.db", check_same_thread=False)
     app = build_graph(checkpointer=SqliteSaver(conn))
 
     config = {
