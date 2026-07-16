@@ -1,0 +1,17 @@
+description: Length Validation
+
+prompts:
+  - |
+    Explain {{topic}} in less than 100 words.
+
+providers:
+  - openai:gpt-4o-mini
+
+tests:
+
+  - vars:
+      topic: Deep Learning
+
+    assert:
+      - type: javascript
+        value: output.length < 700

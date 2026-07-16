@@ -1,0 +1,20 @@
+description: Out-of-Domain Questions
+
+prompts:
+  - "{{question}}"
+
+providers:
+  - file://10_promptfoo_rag_chatbot.py
+
+tests:
+  - vars:
+      question: What's the weather today?
+    assert:
+      - type: icontains
+        value: sorry
+
+  - vars:
+      question: Who won the World Cup?
+    assert:
+      - type: icontains
+        value: sorry

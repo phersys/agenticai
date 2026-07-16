@@ -1,0 +1,24 @@
+description: Persona Testing
+
+prompts:
+  - |
+    You are a {{role}}.
+
+    Explain cloud computing.
+
+providers:
+  - openai:gpt-4o-mini
+
+tests:
+
+  - vars:
+      role: Teacher
+
+  - vars:
+      role: Lawyer
+
+  - vars:
+      role: Doctor
+
+  - vars:
+      role: Engineer

@@ -1,0 +1,31 @@
+description: JSON Validation
+
+prompts:
+  - |
+      Return ONLY a valid JSON object.
+
+      Do NOT include:
+      - Markdown
+      - Triple backticks
+      - ```json
+      - Any explanation
+      - Any text before or after the JSON
+
+      The JSON must have exactly these fields:
+      {
+        "title": "",
+        "summary": "",
+        "keywords": []
+      }
+
+      Topic: {{topic}}
+
+providers:
+  - openai:chat:gpt-4o-mini
+
+tests:
+  - vars:
+      topic: Artificial Intelligence
+
+    assert:
+      - type: is-json

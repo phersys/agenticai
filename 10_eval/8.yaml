@@ -1,0 +1,32 @@
+description: RAG Chatbot Integration (custom Python provider)
+
+prompts:
+  - "{{question}}"
+
+providers:
+  - file://10_promptfoo_rag_chatbot.py
+
+tests:
+  - vars:
+      question: How do I report a lost or stolen debit card?
+    assert:
+      - type: icontains
+        value: customer service
+
+  - vars:
+      question: I lost my debit card, what should I do?
+    assert:
+      - type: icontains
+        value: customer service
+
+  - vars:
+      question: How can I check my account balance?
+    assert:
+      - type: icontains
+        value: online banking
+
+  - vars:
+      question: What's the weather like today?
+    assert:
+      - type: icontains
+        value: sorry

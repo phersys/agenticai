@@ -1,0 +1,26 @@
+description: Paraphrase Testing
+
+prompts:
+  - "{{question}}"
+
+providers:
+  - file://10_promptfoo_rag_chatbot.py
+
+tests:
+  - vars:
+      question: I lost my debit card.
+    assert:
+      - type: icontains
+        value: customer service
+
+  - vars:
+      question: My debit card was stolen.
+    assert:
+      - type: icontains
+        value: customer service
+
+  - vars:
+      question: I cannot find my debit card.
+    assert:
+      - type: icontains
+        value: customer service

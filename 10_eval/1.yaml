@@ -1,0 +1,16 @@
+prompts:
+  - file://prompt_1.txt
+
+providers:
+  - openai:gpt-4o-mini
+  - google:gemini-2.5-flash-lite
+
+tests:
+  - vars:
+      topic: Artificial Intelligence
+
+  - vars:
+      topic: Machine Learning
+
+  - vars:
+      topic: Neural Networks

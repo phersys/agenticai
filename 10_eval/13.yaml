@@ -1,0 +1,16 @@
+description: LLM Quality Evaluation
+
+prompts:
+  - "{{question}}"
+
+providers:
+  - file://10_promptfoo_rag_chatbot.py
+
+tests:
+  - vars:
+      question: How do I report a lost debit card?
+    assert:
+      - type: llm-rubric
+        value: >
+          The response should correctly advise the user to
+          contact customer service immediately.
