@@ -7,7 +7,7 @@ client = boto3.client(service_name='bedrock-runtime', region_name="us-west-2")
 stability_image_config = json.dumps({
     "taskType": "TEXT_IMAGE",
     "textToImageParams": {
-        "text": "a playful and majestic tiger, but not real, make it funny as well",      
+        "text": "an indian school playground in the 1950s",      
     },
     "imageGenerationConfig": {
         "numberOfImages": 1,

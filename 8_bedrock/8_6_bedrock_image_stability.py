@@ -5,7 +5,7 @@ import base64
 client = boto3.client(service_name='bedrock-runtime', region_name="us-west-2")
 
 stability_image_config = json.dumps({
-    "prompt": "a playful and majestic tiger",
+    "prompt": "a typical busy day in an indian city market, make it funny as well",
 })
 
 response = client.invoke_model(
