@@ -1,2 +1,18 @@
-- name: autoupdate-fork-action
-  uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
+name: Autoupdate fork
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # diariamente a medianoche UTC
+  workflow_dispatch:
+
+jobs:
+  autoupdate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update fork from upstream
+        uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
+        with:
+          upstream_repo: atulkahatecdac/agenticai
+          upstream_branch: main
+          branch: main
