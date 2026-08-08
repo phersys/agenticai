@@ -4,6 +4,7 @@ requests==2.34.2
 
 # LLM provider SDKs
 openai==2.44.0
+tiktoken==0.9.0  # OpenAI tokenizer, used by 14_advanced/03_llm_examples/tiktoken_tokenization_example.py
 ollama==0.6.2
 google-generativeai==0.8.6
 cohere==7.0.5
@@ -56,6 +57,14 @@ sentence-transformers==5.6.0
 llama-index==0.14.23
 llama-index-vector-stores-chroma==0.5.5
 umap-learn==0.5.12
+
+# RAG evaluation
+ragas==0.4.3  # used by 15_real/ragas_evaluation.py
+deepeval==4.1.5  # used by 15_real/deepeval_evaluation.py
+
+# Voice / audio
+sounddevice==0.5.5  # microphone capture, used by 15_real/voice_assistant_whisper_langchain.py ("mic" mode)
+soundfile==0.14.0  # WAV file I/O, used by the same script
 
 # Data / ML / explainability
 scikit-learn==1.9.0
