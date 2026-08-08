@@ -1,18 +1,25 @@
-name: Autoupdate fork
+name: Update fork PRs
 
 on:
   schedule:
-    - cron: "0 0 * * *" # diariamente a medianoche UTC
+    - cron: "0 6 * * *" # Cada día a las 06:00 UTC
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   autoupdate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Update fork from upstream
+      - name: autoupdate-fork-action
         uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
         with:
-          upstream_repo: atulkahatecdac/agenticai
-          upstream_branch: main
-          branch: main
+          github_token: ${{ secrets.BOT_TOKEN }}
+          base_branches: main
+          pr_filter: all
+          merge_fail_action: comment
+          merge_method: merge
+          ignore_conflicts: true
