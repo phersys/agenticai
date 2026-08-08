@@ -17,7 +17,7 @@ jobs:
       - name: autoupdate-fork-action
         uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
         with:
-          github_token: ${{ secrets.BOT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           base_branches: main
           pr_filter: all
           merge_fail_action: comment
